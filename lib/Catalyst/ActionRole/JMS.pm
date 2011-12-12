@@ -10,8 +10,15 @@ requires 'attributes';
 has jmstype => (
     is => 'ro',
     isa => 'Str',
-    required => 1,
+    lazy => 1,
+    builder => '_build_jmstype',
 );
+
+sub _build_jmstype {
+    my ($self) = @_;
+
+    return $self->attributes->{JMSType}[0] // $self->name;
+}
 
 sub _extract_jmstype {
     my ($self,$ctx) = @_;
