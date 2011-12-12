@@ -16,8 +16,13 @@ __PACKAGE__->config(
     },
 );
 
-sub begin :ActionClass('Deserialize') {}
-sub end :ActionClass('Serialize') {}
+sub begin :ActionClass('Deserialize') {
+    my ($self,$c) = @_;
+}
+sub end :ActionClass('Serialize') {
+    my ($self,$c) = @_;
+    $c->res->header('X-Reply-Address' => $c->req->data->{reply_to});
+}
 
 sub foo :Path JMSType('foo') {
     my ($self,$c) = @_;
