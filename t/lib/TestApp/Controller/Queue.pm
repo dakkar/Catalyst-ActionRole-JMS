@@ -3,28 +3,13 @@ use Moose;
 use namespace::autoclean;
 use Data::Printer;
 
-BEGIN { extends 'Catalyst::Controller::ActionRole' }
+BEGIN { extends 'Catalyst::Controller::JMS' }
 
 __PACKAGE__->config(
     namespace => 'queue/myq',
-    action_roles => ['JMS'],
-    stash_key => 'message',
-    default => 'application/json',
-    map => {
-        'application/json'   => 'JSON',
-        'text/x-json'        => 'JSON',
-    },
 );
 
-sub begin :ActionClass('Deserialize') {
-    my ($self,$c) = @_;
-}
-sub end :ActionClass('Serialize') {
-    my ($self,$c) = @_;
-    $c->res->header('X-Reply-Address' => $c->req->data->{reply_to});
-}
-
-sub foo :Path JMSType('foo') {
+sub foo :MessageTarget {
     my ($self,$c) = @_;
 
     $c->log->debug('Message received "foo"'.p($c->req->data));
@@ -34,7 +19,7 @@ sub foo :Path JMSType('foo') {
     return;
 }
 
-sub bar :Path :JMSType {
+sub bar :MessageTarget {
     my ($self,$c) = @_;
 
     $c->log->debug('Message received "bar"'.p($c->req->data));

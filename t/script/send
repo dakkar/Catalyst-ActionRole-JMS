@@ -12,7 +12,7 @@ $s->subscribe({destination=>'/temp-queue/reply'});
 $s->send({
     destination => '/queue/myq',
     body => qq[{"some":"stuff","reply_to":"$reply_to"}],
-    JMSType => 'foo',
+    JMSType => 'bar',
 });
 
 $frame=$s->receive_frame;
