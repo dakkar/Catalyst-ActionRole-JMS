@@ -26,9 +26,13 @@ sub _extract_jmstype {
     my $ret = $ctx->request->headers->header('jmstype')
         // $ctx->request->headers->header('type');
     return $ret if defined $ret;
-    my $env = $ctx->engine->env;
-    my $key = first { /\.jmstype$/ } keys %{$env};
-    return $env->{$key};
+    my $env = eval { $ctx->engine->env } || $ctx->request->env;
+
+    {
+        use Data::Printer;warn p $env;
+    }
+
+    return $env->{'jms.type'};
 }
 
 sub _match_jmstype {

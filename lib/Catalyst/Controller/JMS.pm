@@ -34,6 +34,7 @@ sub begin :ActionClass('Deserialize') { }
 
 sub end :ActionClass('Serialize') {
     my ($self,$c) = @_;
+    return unless $c->req->data;
     $c->res->header('X-Reply-Address' => $c->req->data->{reply_to});
 }
 
