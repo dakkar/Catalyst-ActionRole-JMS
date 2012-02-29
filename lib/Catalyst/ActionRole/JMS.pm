@@ -28,10 +28,6 @@ sub _extract_jmstype {
     return $ret if defined $ret;
     my $env = eval { $ctx->engine->env } || $ctx->request->env;
 
-    {
-        use Data::Printer;warn p $env;
-    }
-
     return $env->{'jms.type'};
 }
 
