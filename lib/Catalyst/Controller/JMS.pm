@@ -3,7 +3,59 @@ use Moose;
 use namespace::autoclean;
 use Data::Printer;
 
+# ABSTRACT: controller base class to simplify usage of Catalyst::ActionRole::JMS
+
 BEGIN { extends 'Catalyst::Controller::ActionRole' }
+
+=head1 SYNOPSIS
+
+  package MyApp::Controller::Something;
+  use Moose;
+
+  BEGIN { extends 'Catalyst::Controller::JMS' }
+
+  __PACKAGE__->config(
+    namespace => 'queue/my_queue',
+  );
+
+  sub my_message_type :MessageTarget {
+    my ($self,$c) = @_;
+
+    my $body = $c->req->data;
+    my $headers = $c->req->headers;
+
+    # do something
+
+    $c->res->header('X-Reply-Address' => 'temporary-queue-name');
+    $c->stash->{message} = { some => [ 'reply', 'message' ] };
+
+    return;
+  }
+
+=head1 DESCRIPTION
+
+This controller base class makes it easy to handle messages in your
+Catalyst application. It handles deserialisation and serialisation
+transparently (thanks to L<Catalyst::Action::Deserialize> and
+L<Catalyst::Action::Serialize>) and sets up the attributes needed
+by L<Catalyst::ActionRole::JMS>. It also sets up some sensible default
+configuration.
+
+=head1 CONFIGURATION
+
+  __PACKAGE__->config(
+    stash_key => 'message',
+    default => 'application/json',
+    map => {
+      'application/json'   => 'JSON',
+      'text/x-json'        => 'JSON',
+    },
+  );
+
+See L<Catalyst::Action::Deserialize> and
+L<Catalyst::Action::Serialize> for what this means.
+
+=cut
 
 __PACKAGE__->config(
     stash_key => 'message',
@@ -13,6 +65,34 @@ __PACKAGE__->config(
         'text/x-json'        => 'JSON',
     },
 );
+
+=head1 ACTIONS
+
+=head2 Your actions
+
+If you set the C<MessageTarget> attribute on an action, it will be
+marked for dispatch based on the JMSType of incoming messages. More
+precisely:
+
+  sub my_message_type :MessageTarget { }
+
+is equivalent to:
+
+  sub my_message_type : Does('Catalyst::ActionRole::JMS')
+                        JMSType('my_message_type')
+   { }
+
+And:
+
+  sub my_action :MessageTarget('my_type') { }
+
+is equivalent to:
+
+  sub my_action : Does('Catalyst::ActionRole::JMS')
+                  JMSType('my_type')
+   { }
+
+=cut
 
 around create_action => sub {
     my ($orig, $self, %args) = @_;
@@ -30,13 +110,23 @@ around create_action => sub {
     return $self->$orig(%args);
 };
 
+=head2 C<begin>
+
+De-serialises the body of the request into C<< $ctx->req->data >>. See
+L<Catalyst::Action::Deserialize> for details.
+
+=cut
+
 sub begin :ActionClass('Deserialize') { }
 
-sub end :ActionClass('Serialize') {
-    my ($self,$c) = @_;
-    return unless $c->req->data;
-    $c->res->header('X-Reply-Address' => $c->req->data->{reply_to});
-}
+=head2 C<end>
+
+Serialises C<< $ctx->stash->{message} >> into the response body. See
+L<Catalyst::Action::Serialize> for details.
+
+=cut
+
+sub end :ActionClass('Serialize') { }
 
 __PACKAGE__->meta->make_immutable;
 
