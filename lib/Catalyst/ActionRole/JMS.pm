@@ -43,7 +43,7 @@ has jmstype => (
 sub _build_jmstype {
     my ($self) = @_;
 
-    return $self->attributes->{JMSType}[0] // $self->name;
+    return $self->attributes->{JMSType}[0] || $self->name;
 }
 
 =method C<match>
@@ -84,7 +84,7 @@ sub _extract_jmstype {
     my ($self,$ctx) = @_;
 
     my $ret = $ctx->request->headers->header('jmstype')
-        // $ctx->request->headers->header('type');
+        || $ctx->request->headers->header('type');
     return $ret if defined $ret;
     my $env = eval { $ctx->engine->env } || $ctx->request->env;
 
