@@ -13,7 +13,9 @@ use namespace::autoclean;
 
 # ABSTRACT: role for actions to dispatch based on JMSType
 
+
 requires 'attributes';
+
 
 has jmstype => (
     is => 'ro',
@@ -28,22 +30,6 @@ sub _build_jmstype {
     return $self->attributes->{JMSType}[0] // $self->name;
 }
 
-sub _extract_jmstype {
-    my ($self,$ctx) = @_;
-
-    my $ret = $ctx->request->headers->header('jmstype')
-        // $ctx->request->headers->header('type');
-    return $ret if defined $ret;
-    my $env = eval { $ctx->engine->env } || $ctx->request->env;
-
-    return $env->{'jms.type'};
-}
-
-sub _match_jmstype {
-    my ($self,$req_jmstype) = @_;
-
-    return $self->jmstype eq $req_jmstype;
-}
 
 around match => sub {
     my ($orig,$self,$ctx) = @_;
@@ -57,6 +43,25 @@ around match => sub {
     }
     return 0;
 };
+
+
+sub _extract_jmstype {
+    my ($self,$ctx) = @_;
+
+    my $ret = $ctx->request->headers->header('jmstype')
+        // $ctx->request->headers->header('type');
+    return $ret if defined $ret;
+    my $env = eval { $ctx->engine->env } || $ctx->request->env;
+
+    return $env->{'jms.type'};
+}
+
+
+sub _match_jmstype {
+    my ($self,$req_jmstype) = @_;
+
+    return $self->jmstype eq $req_jmstype;
+}
 
 1;
 
@@ -72,6 +77,54 @@ Catalyst::ActionRole::JMS - role for actions to dispatch based on JMSType
 =head1 VERSION
 
 version 0.0.1
+
+=head1 SYNOPSIS
+
+  sub an_action : Does('Catalyst::ActionRole::JMS') JMSType('some_type') {
+    # do whatever
+  }
+
+=head1 DESCRIPTION
+
+Apply this role to your actions (via
+L<Catalyst::Controller::ActionRole> and the C<Does> attribute) to have
+the dispatch look at the JMSType of incoming requests (that should
+really be messages from some queueing system, see
+L<Plack::Handler::Stomp> for an example). The requests / messages
+should be dispatched to the namespace of the action.
+
+=head1 ATTRIBUTES
+
+=head2 C<jmstype>
+
+The type to match against. Defaults to the value of a C<JMSType>
+action attribute, or the action name if such attribute is not present.
+
+=head1 METHODS
+
+=head2 C<match>
+
+C<around> modifier for the C<match> method of the action
+class. Extracts the request / message type by calling
+L</_extract_jmstype>, and compares it with the value of the
+L</jmstype> attribute by calling L</_match_jmstype>. If it matches,
+delegates to the normal C<match> method, otherwise signals a non-match
+to the dispatched by returning false.
+
+=head2 C<_extract_jmstype>
+
+  my $type = $self->_extract_jmstype($ctx);
+
+Gets the type of the request / message. It first looks in the request
+headers for C<jmstype> or C<type> keys, then looks into the PSGI
+environment for a C<jms.type> key.
+
+=head2 C<_match_jmstype>
+
+  my $ok = $self->_match_jmstype($request_type);
+
+Simple string equality comparison. Override this if you need more
+complicated matching semantics.
 
 =head1 AUTHOR
 
