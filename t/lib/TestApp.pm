@@ -4,10 +4,7 @@ use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
 
-use Catalyst qw/
-    -Debug
-    ConfigLoader
-/;
+use Catalyst $ENV{TEST_VERBOSE} ? qw(-Debug) : () ;
 
 extends 'Catalyst';
 
