@@ -16,6 +16,7 @@ sub jms_req {
         'POST',$queue,
         [
             JMSType => $type,
+            'Content-Type' => 'application/x-json',
         ],
         $ser->encode($body)
     );
