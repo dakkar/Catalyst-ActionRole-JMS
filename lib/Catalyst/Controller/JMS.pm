@@ -1,7 +1,15 @@
 package Catalyst::Controller::JMS;
+{
+  $Catalyst::Controller::JMS::VERSION = '0.0.1';
+}
+{
+  $Catalyst::Controller::JMS::DIST = 'Catalyst-ActionRole-JMS';
+}
 use Moose;
 use namespace::autoclean;
 use Data::Printer;
+
+# ABSTRACT: controller base class to simplify usage of Catalyst::ActionRole::JMS
 
 BEGIN { extends 'Catalyst::Controller::ActionRole' }
 
@@ -41,3 +49,30 @@ sub end :ActionClass('Serialize') {
 __PACKAGE__->meta->make_immutable;
 
 1;
+
+__END__
+=pod
+
+=encoding utf-8
+
+=head1 NAME
+
+Catalyst::Controller::JMS - controller base class to simplify usage of Catalyst::ActionRole::JMS
+
+=head1 VERSION
+
+version 0.0.1
+
+=head1 AUTHOR
+
+Gianni Ceccarelli <gianni.ceccarelli@net-a-porter.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Net-a-porter.com.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
