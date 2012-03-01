@@ -31,4 +31,13 @@ sub bar :MessageTarget {
     return;
 }
 
+sub default :Default {
+    my ($self,$c) = @_;
+
+    $c->log->debug('Message dispatched to default'.p($c->req->data))
+        if $c->debug;
+
+    return;
+}
+
 1;
