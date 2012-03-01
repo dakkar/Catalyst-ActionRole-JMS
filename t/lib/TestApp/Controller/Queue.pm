@@ -12,7 +12,8 @@ __PACKAGE__->config(
 sub foo :MessageTarget {
     my ($self,$c) = @_;
 
-    $c->log->debug('Message received "foo"'.p($c->req->data));
+    $c->log->debug('Message received "foo"'.p($c->req->data))
+        if $c->debug;
 
     $c->stash->{message} = $c->req->data;
 
@@ -22,7 +23,8 @@ sub foo :MessageTarget {
 sub bar :MessageTarget {
     my ($self,$c) = @_;
 
-    $c->log->debug('Message received "bar"'.p($c->req->data));
+    $c->log->debug('Message received "bar"'.p($c->req->data))
+        if $c->debug;
 
     $c->stash->{message} = {my=>'return'};
 
