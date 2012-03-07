@@ -44,7 +44,12 @@ around create_action => sub {
 sub begin :ActionClass('Deserialize') { }
 
 
-sub end :ActionClass('Serialize') { }
+sub end :ActionClass('Serialize') {
+    my ($self,$c) = @_;
+
+    $c->stash->{message} = [$c->stash->{message}]
+        unless ref($c->stash->{message});
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -137,6 +142,15 @@ is equivalent to:
                   JMSType('my_type')
    { }
 
+If you want to have a C<default> action to catch requests not matching
+any other action, you have to declare it as:
+
+  sub default :Default { }
+
+otherwise dispatch may not work properly, see
+http://lists.scsys.co.uk/pipermail/catalyst/2012-March/028261.html for
+some attempts at an explanation
+
 =head2 C<begin>
 
 De-serialises the body of the request into C<< $ctx->req->data >>. See
@@ -146,6 +160,10 @@ L<Catalyst::Action::Deserialize> for details.
 
 Serialises C<< $ctx->stash->{message} >> into the response body. See
 L<Catalyst::Action::Serialize> for details.
+
+B<NOTE>: if C<< $ctx->stash->{message} >> is not a reference, it will
+be wrapped in an arrayref. Some L<Catalyst::Action::Serialize> plugins
+don't like serialising plain scalars.
 
 =head1 AUTHOR
 
