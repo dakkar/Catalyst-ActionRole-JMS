@@ -7,7 +7,6 @@ package Catalyst::Controller::JMS;
 }
 use Moose;
 use namespace::autoclean;
-use Data::Printer;
 
 # ABSTRACT: controller base class to simplify usage of Catalyst::ActionRole::JMS
 

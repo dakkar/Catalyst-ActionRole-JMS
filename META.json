@@ -27,7 +27,6 @@
       "runtime" : {
          "requires" : {
             "Catalyst::Controller::ActionRole" : "0",
-            "Data::Printer" : "0",
             "List::Util" : "0",
             "Moose" : "0",
             "Moose::Role" : "0",
@@ -43,6 +42,7 @@
             "Catalyst::Runtime" : "5.80",
             "Catalyst::ScriptRunner" : "0",
             "Catalyst::Test" : "0",
+            "Data::Printer" : "0",
             "FindBin::libs" : "0",
             "HTTP::Request" : "0",
             "JSON::XS" : "0",
