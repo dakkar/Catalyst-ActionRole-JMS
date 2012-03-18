@@ -1,10 +1,71 @@
 package Catalyst::Controller::JMS;
+{
+  $Catalyst::Controller::JMS::VERSION = '0.1_02';
+}
+{
+  $Catalyst::Controller::JMS::DIST = 'Catalyst-ActionRole-JMS';
+}
 use Moose;
 use namespace::autoclean;
 
 # ABSTRACT: controller base class to simplify usage of Catalyst::ActionRole::JMS
 
 BEGIN { extends 'Catalyst::Controller::ActionRole' }
+
+
+__PACKAGE__->config(
+    stash_key => 'message',
+    default => 'application/json',
+    map => {
+        'application/json'   => 'JSON',
+        'text/x-json'        => 'JSON',
+    },
+);
+
+
+around create_action => sub {
+    my ($orig, $self, %args) = @_;
+
+    return $self->$orig(%args)
+        if $args{name} =~ /^_(DISPATCH|BEGIN|AUTO|ACTION|END)$/;
+
+    my $type = delete $args{attributes}->{MessageTarget};
+    if ($type) {
+        $args{attributes}->{Path} = [$self->path_prefix()];
+        $args{attributes}->{JMSType} = [$type->[0] // $args{name}];
+        $args{attributes}->{Does} = [ 'Catalyst::ActionRole::JMS' ];
+    }
+
+    return $self->$orig(%args);
+};
+
+
+sub begin :ActionClass('Deserialize') { }
+
+
+sub end :ActionClass('Serialize') {
+    my ($self,$c) = @_;
+
+    $c->stash->{message} = [$c->stash->{message}]
+        unless ref($c->stash->{message});
+}
+
+__PACKAGE__->meta->make_immutable;
+
+1;
+
+__END__
+=pod
+
+=encoding utf-8
+
+=head1 NAME
+
+Catalyst::Controller::JMS - controller base class to simplify usage of Catalyst::ActionRole::JMS
+
+=head1 VERSION
+
+version 0.1_02
 
 =head1 SYNOPSIS
 
@@ -54,17 +115,6 @@ configuration.
 See L<Catalyst::Action::Deserialize> and
 L<Catalyst::Action::Serialize> for what this means.
 
-=cut
-
-__PACKAGE__->config(
-    stash_key => 'message',
-    default => 'application/json',
-    map => {
-        'application/json'   => 'JSON',
-        'text/x-json'        => 'JSON',
-    },
-);
-
 =head1 ACTIONS
 
 =head2 Your actions
@@ -100,32 +150,10 @@ otherwise dispatch may not work properly, see
 http://lists.scsys.co.uk/pipermail/catalyst/2012-March/028261.html for
 some attempts at an explanation
 
-=cut
-
-around create_action => sub {
-    my ($orig, $self, %args) = @_;
-
-    return $self->$orig(%args)
-        if $args{name} =~ /^_(DISPATCH|BEGIN|AUTO|ACTION|END)$/;
-
-    my $type = delete $args{attributes}->{MessageTarget};
-    if ($type) {
-        $args{attributes}->{Path} = [$self->path_prefix()];
-        $args{attributes}->{JMSType} = [$type->[0] // $args{name}];
-        $args{attributes}->{Does} = [ 'Catalyst::ActionRole::JMS' ];
-    }
-
-    return $self->$orig(%args);
-};
-
 =head2 C<begin>
 
 De-serialises the body of the request into C<< $ctx->req->data >>. See
 L<Catalyst::Action::Deserialize> for details.
-
-=cut
-
-sub begin :ActionClass('Deserialize') { }
 
 =head2 C<end>
 
@@ -136,15 +164,16 @@ B<NOTE>: if C<< $ctx->stash->{message} >> is not a reference, it will
 be wrapped in an arrayref. Some L<Catalyst::Action::Serialize> plugins
 don't like serialising plain scalars.
 
+=head1 AUTHOR
+
+Gianni Ceccarelli <gianni.ceccarelli@net-a-porter.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Net-a-porter.com.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
 =cut
 
-sub end :ActionClass('Serialize') {
-    my ($self,$c) = @_;
-
-    $c->stash->{message} = [$c->stash->{message}]
-        unless ref($c->stash->{message});
-}
-
-__PACKAGE__->meta->make_immutable;
-
-1;

@@ -1,4 +1,4 @@
-{{$NEXT}}
+0.1_02    2012-03-18 18:35:17 Europe/London
 - fix missing prereq Catalyst::Action::REST
 
 0.1_01    2012-03-14 12:12:57 Europe/London
