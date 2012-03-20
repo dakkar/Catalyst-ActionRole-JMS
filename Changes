@@ -1,4 +1,5 @@
 {{$NEXT}}
+- fix test by adding a Content-length header
 
 0.1_02    2012-03-18 18:35:17 Europe/London
 - fix missing prereq Catalyst::Action::REST
