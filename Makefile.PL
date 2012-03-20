@@ -23,7 +23,8 @@ my %WriteMakefileArgs = (
     "JSON::XS" => 0,
     "Net::Stomp" => 0,
     "Test::More" => 0,
-    "Test::Most" => 0
+    "Test::Most" => 0,
+    "bytes" => 0
   },
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
@@ -33,6 +34,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Catalyst::ActionRole::JMS",
   "PREREQ_PM" => {
+    "Catalyst::Action::REST" => 0,
     "Catalyst::Controller::ActionRole" => 0,
     "List::Util" => 0,
     "Moose" => 0,
@@ -41,7 +43,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.1_01",
+  "VERSION" => "0.1_03",
   "test" => {
     "TESTS" => "t/*.t"
   }

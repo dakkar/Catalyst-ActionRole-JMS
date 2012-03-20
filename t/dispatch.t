@@ -12,13 +12,17 @@ my $ser = JSON::XS->new->utf8;
 sub jms_req {
     my ($queue,$type,$body) = @_;
 
+    use bytes;
+    my $enc_body=$ser->encode($body);
+
     my $r = HTTP::Request->new(
         'POST',$queue,
         [
             JMSType => $type,
             'Content-type' => 'application/json',
+            'Content-length' => length($enc_body),
         ],
-        $ser->encode($body)
+        $enc_body,
     );
 
     my ($res,$ctx) = ctx_request($r);

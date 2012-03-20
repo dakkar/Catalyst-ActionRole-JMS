@@ -15,10 +15,11 @@ build_requires:
   Net::Stomp: 0
   Test::More: 0
   Test::Most: 0
+  bytes: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300009, CPAN::Meta::Converter version 2.120530'
+generated_by: 'Dist::Zilla version 4.300010, CPAN::Meta::Converter version 2.120630'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -28,6 +29,7 @@ no_index:
   directory:
     - t/lib
 requires:
+  Catalyst::Action::REST: 0
   Catalyst::Controller::ActionRole: 0
   List::Util: 0
   Moose: 0
@@ -35,4 +37,4 @@ requires:
   namespace::autoclean: 0
   strict: 0
   warnings: 0
-version: 0.1_01
+version: 0.1_03
