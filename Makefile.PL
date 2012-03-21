@@ -13,6 +13,7 @@ my %WriteMakefileArgs = (
   "AUTHOR" => "Gianni Ceccarelli <gianni.ceccarelli\@net-a-porter.com>",
   "BUILD_REQUIRES" => {
     "Catalyst" => 0,
+    "Catalyst::Action::Deserialize::JSON" => 0,
     "Catalyst::Controller" => 0,
     "Catalyst::Runtime" => "5.80",
     "Catalyst::ScriptRunner" => 0,
@@ -43,7 +44,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.1_03",
+  "VERSION" => "0.1_04",
   "test" => {
     "TESTS" => "t/*.t"
   }

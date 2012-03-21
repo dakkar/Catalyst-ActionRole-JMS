@@ -4,6 +4,7 @@ author:
   - 'Gianni Ceccarelli <gianni.ceccarelli@net-a-porter.com>'
 build_requires:
   Catalyst: 0
+  Catalyst::Action::Deserialize::JSON: 0
   Catalyst::Controller: 0
   Catalyst::Runtime: 5.80
   Catalyst::ScriptRunner: 0
@@ -37,4 +38,4 @@ requires:
   namespace::autoclean: 0
   strict: 0
   warnings: 0
-version: 0.1_03
+version: 0.1_04
