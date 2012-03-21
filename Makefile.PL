@@ -14,6 +14,7 @@ my %WriteMakefileArgs = (
   "BUILD_REQUIRES" => {
     "Catalyst" => 0,
     "Catalyst::Action::Deserialize::JSON" => 0,
+    "Catalyst::Action::Serialize::JSON" => 0,
     "Catalyst::Controller" => 0,
     "Catalyst::Runtime" => "5.80",
     "Catalyst::ScriptRunner" => 0,
