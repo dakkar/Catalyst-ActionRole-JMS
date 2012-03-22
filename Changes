@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+0.1_05    2012-03-22 22:18:40 Europe/London
 - new test prereq JSON & JSON::XS, thanks to bingos who helped me
   track down the issue
 
