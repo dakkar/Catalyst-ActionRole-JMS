@@ -22,6 +22,9 @@ really be messages from some queueing system, see
 L<Plack::Handler::Stomp> for an example). The requests / messages
 should be dispatched to the namespace of the action.
 
+You should look at L<Catalyst::Controller::JMS> for a more integrated
+solution using this module together with automatic (de-)serialization.
+
 =cut
 
 requires 'attributes';
@@ -105,5 +108,12 @@ sub _match_jmstype {
 
     return $self->jmstype eq $req_jmstype;
 }
+
+=head1 EXAMPLES
+
+You can find examples of use in the tests, or at
+https://github.com/dakkar/CatalystX-StompSampleApps
+
+=cut
 
 1;

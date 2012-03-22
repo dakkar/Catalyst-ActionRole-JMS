@@ -33,12 +33,12 @@ BEGIN { extends 'Catalyst::Controller::ActionRole' }
 
 =head1 DESCRIPTION
 
-This controller base class makes it easy to handle messages in your
-Catalyst application. It handles deserialisation and serialisation
-transparently (thanks to L<Catalyst::Action::Deserialize> and
-L<Catalyst::Action::Serialize>) and sets up the attributes needed
-by L<Catalyst::ActionRole::JMS>. It also sets up some sensible default
-configuration.
+This controller base class makes it easy to handle JMS-style messages
+in your Catalyst application. It handles deserialisation and
+serialisation transparently (thanks to
+L<Catalyst::Action::Deserialize> and L<Catalyst::Action::Serialize>)
+and sets up the attributes needed by L<Catalyst::ActionRole::JMS>. It
+also sets up some sensible default configuration.
 
 =head1 CONFIGURATION
 
@@ -146,5 +146,12 @@ sub end :ActionClass('Serialize') {
 }
 
 __PACKAGE__->meta->make_immutable;
+
+=head1 EXAMPLES
+
+You can find examples of use in the tests, or at
+https://github.com/dakkar/CatalystX-StompSampleApps
+
+=cut
 
 1;
