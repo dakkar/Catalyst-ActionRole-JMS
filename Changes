@@ -1,4 +1,6 @@
 {{$NEXT}}
+- new test prereq JSON & JSON::XS, thanks to bingos who helped me
+  track down the issue
 
 0.1_04    2012-03-21 12:28:52 Europe/London
 - try to help tests my adding deps that should really be part of
