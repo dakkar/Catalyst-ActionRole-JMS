@@ -1,4 +1,5 @@
 {{$NEXT}}
+- first non-devel release
 
 0.1_05    2012-03-22 22:18:40 Europe/London
 - new test prereq JSON & JSON::XS, thanks to bingos who helped me
