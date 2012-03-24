@@ -1,6 +1,6 @@
 package Catalyst::Controller::JMS;
 {
-  $Catalyst::Controller::JMS::VERSION = '0.1_05';
+  $Catalyst::Controller::JMS::VERSION = '1.0';
 }
 {
   $Catalyst::Controller::JMS::DIST = 'Catalyst-ActionRole-JMS';
@@ -66,7 +66,7 @@ Catalyst::Controller::JMS - controller base class to simplify usage of Catalyst:
 
 =head1 VERSION
 
-version 0.1_05
+version 1.0
 
 =head1 SYNOPSIS
 
