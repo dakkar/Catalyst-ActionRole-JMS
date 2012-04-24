@@ -1,6 +1,6 @@
 package Catalyst::ActionRole::JMS;
 {
-  $Catalyst::ActionRole::JMS::VERSION = '0.1_04';
+  $Catalyst::ActionRole::JMS::VERSION = '0.1_05';
 }
 {
   $Catalyst::ActionRole::JMS::DIST = 'Catalyst-ActionRole-JMS';
@@ -63,6 +63,7 @@ sub _match_jmstype {
     return $self->jmstype eq $req_jmstype;
 }
 
+
 1;
 
 __END__
@@ -76,7 +77,7 @@ Catalyst::ActionRole::JMS - role for actions to dispatch based on JMSType
 
 =head1 VERSION
 
-version 0.1_04
+version 0.1_05
 
 =head1 SYNOPSIS
 
@@ -92,6 +93,9 @@ the dispatch look at the JMSType of incoming requests (that should
 really be messages from some queueing system, see
 L<Plack::Handler::Stomp> for an example). The requests / messages
 should be dispatched to the namespace of the action.
+
+You should look at L<Catalyst::Controller::JMS> for a more integrated
+solution using this module together with automatic (de-)serialization.
 
 =head1 ATTRIBUTES
 
@@ -125,6 +129,11 @@ environment for a C<jms.type> key.
 
 Simple string equality comparison. Override this if you need more
 complicated matching semantics.
+
+=head1 EXAMPLES
+
+You can find examples of use in the tests, or at
+https://github.com/dakkar/CatalystX-StompSampleApps
 
 =head1 AUTHOR
 

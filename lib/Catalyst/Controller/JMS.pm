@@ -1,6 +1,6 @@
 package Catalyst::Controller::JMS;
 {
-  $Catalyst::Controller::JMS::VERSION = '0.1_04';
+  $Catalyst::Controller::JMS::VERSION = '0.1_05';
 }
 {
   $Catalyst::Controller::JMS::DIST = 'Catalyst-ActionRole-JMS';
@@ -52,6 +52,7 @@ sub end :ActionClass('Serialize') {
 
 __PACKAGE__->meta->make_immutable;
 
+
 1;
 
 __END__
@@ -65,7 +66,7 @@ Catalyst::Controller::JMS - controller base class to simplify usage of Catalyst:
 
 =head1 VERSION
 
-version 0.1_04
+version 0.1_05
 
 =head1 SYNOPSIS
 
@@ -94,12 +95,12 @@ version 0.1_04
 
 =head1 DESCRIPTION
 
-This controller base class makes it easy to handle messages in your
-Catalyst application. It handles deserialisation and serialisation
-transparently (thanks to L<Catalyst::Action::Deserialize> and
-L<Catalyst::Action::Serialize>) and sets up the attributes needed
-by L<Catalyst::ActionRole::JMS>. It also sets up some sensible default
-configuration.
+This controller base class makes it easy to handle JMS-style messages
+in your Catalyst application. It handles deserialisation and
+serialisation transparently (thanks to
+L<Catalyst::Action::Deserialize> and L<Catalyst::Action::Serialize>)
+and sets up the attributes needed by L<Catalyst::ActionRole::JMS>. It
+also sets up some sensible default configuration.
 
 =head1 CONFIGURATION
 
@@ -163,6 +164,11 @@ L<Catalyst::Action::Serialize> for details.
 B<NOTE>: if C<< $ctx->stash->{message} >> is not a reference, it will
 be wrapped in an arrayref. Some L<Catalyst::Action::Serialize> plugins
 don't like serialising plain scalars.
+
+=head1 EXAMPLES
+
+You can find examples of use in the tests, or at
+https://github.com/dakkar/CatalystX-StompSampleApps
 
 =head1 AUTHOR
 
