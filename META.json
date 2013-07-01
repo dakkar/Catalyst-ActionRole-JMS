@@ -63,7 +63,7 @@
          }
       }
    },
-   "release_status" : "testing",
-   "version" : "0.1_05"
+   "release_status" : "stable",
+   "version" : "1.1"
 }
 

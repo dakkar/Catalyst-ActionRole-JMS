@@ -1,6 +1,6 @@
 package Catalyst::ActionRole::JMS;
 {
-  $Catalyst::ActionRole::JMS::VERSION = '0.1_05';
+  $Catalyst::ActionRole::JMS::VERSION = '1.1';
 }
 {
   $Catalyst::ActionRole::JMS::DIST = 'Catalyst-ActionRole-JMS';
@@ -78,7 +78,7 @@ Catalyst::ActionRole::JMS - role for actions to dispatch based on JMSType
 
 =head1 VERSION
 
-version 0.1_05
+version 1.1
 
 =head1 SYNOPSIS
 
