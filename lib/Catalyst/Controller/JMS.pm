@@ -32,7 +32,7 @@ around create_action => sub {
     my $type = delete $args{attributes}->{MessageTarget};
     if ($type) {
         $args{attributes}->{Path} = [$self->path_prefix()];
-        $args{attributes}->{JMSType} = [$type->[0] // $args{name}];
+        $args{attributes}->{JMSType} = [$type->[0] || $args{name}];
         $args{attributes}->{Does} = [ 'Catalyst::ActionRole::JMS' ];
     }
 
