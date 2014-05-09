@@ -4,7 +4,7 @@ use namespace::autoclean;
 
 # ABSTRACT: controller base class to simplify usage of Catalyst::ActionRole::JMS
 
-BEGIN { extends 'Catalyst::Controller::ActionRole' }
+BEGIN { extends 'Catalyst::Controller' }
 
 =head1 SYNOPSIS
 

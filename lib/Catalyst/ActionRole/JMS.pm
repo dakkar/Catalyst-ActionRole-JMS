@@ -15,8 +15,8 @@ use namespace::autoclean;
 
 =head1 DESCRIPTION
 
-Apply this role to your actions (via
-L<Catalyst::Controller::ActionRole> and the C<Does> attribute) to have
+Apply this role to your actions (via the
+L<Does|Catalyst::Controller/Does> attribute) to have
 the dispatch look at the JMSType of incoming requests (that should
 really be messages from some queueing system, see
 L<Plack::Handler::Stomp> for an example). The requests / messages
