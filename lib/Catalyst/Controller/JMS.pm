@@ -1,7 +1,5 @@
 package Catalyst::Controller::JMS;
-{
-  $Catalyst::Controller::JMS::VERSION = '1.1';
-}
+$Catalyst::Controller::JMS::VERSION = '1.2';
 {
   $Catalyst::Controller::JMS::DIST = 'Catalyst-ActionRole-JMS';
 }
@@ -10,7 +8,7 @@ use namespace::autoclean;
 
 # ABSTRACT: controller base class to simplify usage of Catalyst::ActionRole::JMS
 
-BEGIN { extends 'Catalyst::Controller::ActionRole' }
+BEGIN { extends 'Catalyst::Controller' }
 
 
 __PACKAGE__->config(
@@ -59,7 +57,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -67,7 +65,7 @@ Catalyst::Controller::JMS - controller base class to simplify usage of Catalyst:
 
 =head1 VERSION
 
-version 1.1
+version 1.2
 
 =head1 SYNOPSIS
 

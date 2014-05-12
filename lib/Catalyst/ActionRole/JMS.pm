@@ -1,7 +1,5 @@
 package Catalyst::ActionRole::JMS;
-{
-  $Catalyst::ActionRole::JMS::VERSION = '1.1';
-}
+$Catalyst::ActionRole::JMS::VERSION = '1.2';
 {
   $Catalyst::ActionRole::JMS::DIST = 'Catalyst-ActionRole-JMS';
 }
@@ -70,7 +68,7 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
@@ -78,7 +76,7 @@ Catalyst::ActionRole::JMS - role for actions to dispatch based on JMSType
 
 =head1 VERSION
 
-version 1.1
+version 1.2
 
 =head1 SYNOPSIS
 
@@ -88,8 +86,8 @@ version 1.1
 
 =head1 DESCRIPTION
 
-Apply this role to your actions (via
-L<Catalyst::Controller::ActionRole> and the C<Does> attribute) to have
+Apply this role to your actions (via the
+L<Does|Catalyst::Controller/Does> attribute) to have
 the dispatch look at the JMSType of incoming requests (that should
 really be messages from some queueing system, see
 L<Plack::Handler::Stomp> for an example). The requests / messages
