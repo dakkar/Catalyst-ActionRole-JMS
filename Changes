@@ -1,4 +1,6 @@
 {{$NEXT}}
+- stop using deprecated Catalyst::Controller::ActionRole
+- bump Catalyst::Runtime dependency to 5.90013
 
 1.1       2013-07-01 11:24:20 Europe/London
 - now compatible with perl < 5.10
